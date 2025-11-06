@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     float minX = -80f;
     float maxX = 80f;
 
+    bool wasGrounded = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,9 +38,18 @@ public class PlayerController : MonoBehaviour
     }    
     void Update()
     {
+        bool grounded = IsGrounded();
+
+        // ÂøÁö ¼ø°£
+        if (!wasGrounded && grounded)
+        {
+            SoundManagers.Instance.PlayLand();
+        }
+
         MoveInput();
         MouseInput();
-        
+
+        wasGrounded = grounded;
     }
 
     private void FixedUpdate()
@@ -65,6 +76,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             jump = true;
+            SoundManagers.Instance.PlayJump();
         }
     }
 
@@ -95,7 +107,6 @@ public class PlayerController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, yaw, 0);
         cam.localRotation = Quaternion.Euler(pitch, 0, 0);
     }
-
 
     public bool IsMoving => (h != 0 || v != 0);
     public bool IsGroundedCheck => IsGrounded();

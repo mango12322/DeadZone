@@ -8,6 +8,8 @@ public class SoundManagers : MonoBehaviour
     [SerializeField] AudioSource[] footSteps;
     [SerializeField] AudioSource fire;
     [SerializeField] AudioSource reload;
+    [SerializeField] AudioSource land;
+    [SerializeField] AudioSource jump;
 
     private void Awake()
     {
@@ -35,6 +37,8 @@ public class SoundManagers : MonoBehaviour
 
     public void PlayFire() => fire?.Play();
     public void PlayReload() => reload?.Play();
+    public void PlayLand() => land?.Play();
+    public void PlayJump() => jump?.Play();
 
    
 }
