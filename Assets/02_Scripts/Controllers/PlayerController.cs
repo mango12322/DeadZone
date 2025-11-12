@@ -34,8 +34,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        capsule = rb.GetComponent<CapsuleCollider>();        
+        capsule = rb.GetComponent<CapsuleCollider>();
+
+        Init();
+        LockCursor(true);
     }    
+
     void Update()
     {
         bool grounded = IsGrounded();
@@ -47,7 +51,7 @@ public class PlayerController : MonoBehaviour
         }
 
         MoveInput();
-        MouseInput();
+        MouseInput();        
 
         wasGrounded = grounded;
     }
@@ -78,6 +82,13 @@ public class PlayerController : MonoBehaviour
             jump = true;
             SoundManagers.Instance.PlayJump();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            LockCursor(false);
+
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState != CursorLockMode.Locked)
+            LockCursor(true);
+
     }
 
     void Move()
@@ -106,6 +117,23 @@ public class PlayerController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(0, yaw, 0);
         cam.localRotation = Quaternion.Euler(pitch, 0, 0);
+    }
+
+    void Init()
+    {
+        // 에디터에서 세팅한 시작 방향을 그대로 사용
+        yaw = transform.eulerAngles.y;
+
+        // 카메라는 로컬 X만 사용 (Y,Z는 0 유지)
+        pitch = cam.localEulerAngles.x;
+        if (pitch > 180f) pitch -= 360f; // 0~360 → -180~180 보정
+        cam.localEulerAngles = new Vector3(pitch, 0f, 0f);
+    }
+
+    void LockCursor(bool locked)
+    {
+        Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None; // 혹은 Confined
+        Cursor.visible = !locked;
     }
 
     public bool IsMoving => (h != 0 || v != 0);
