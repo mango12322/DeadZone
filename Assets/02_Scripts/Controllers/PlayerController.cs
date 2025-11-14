@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     // 이동 구현
     float h;
     float v;
-    float moveSpeed = 3f;
+    float moveSpeed = 5f;
     Vector3 moveDir;
 
     bool jump = false;
