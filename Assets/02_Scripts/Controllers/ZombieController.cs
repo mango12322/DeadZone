@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
@@ -7,16 +8,24 @@ public class ZombieController : MonoBehaviour
     // 3. 공격 거리
     // 4. 상태 애니메이션 적용
     public Transform target;
-    public float detectRange = 10f;
-    public float attackRange = 2f;
+
+    Animator animator;
+    NavMeshAgent agent;
 
     void Start()
     {
-        
+        target = GameObject.FindWithTag("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
     
     void Update()
     {
+        agent.SetDestination(target.position);
+        if (agent.remainingDistance > agent.stoppingDistance)
+        {
+
+        }
         
     }
 }

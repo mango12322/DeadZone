@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8680306093312616617}
   - component: {fileID: 6411745533783859095}
   - component: {fileID: 6807907759054765199}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: armory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
